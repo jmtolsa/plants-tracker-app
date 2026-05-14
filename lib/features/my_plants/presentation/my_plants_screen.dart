@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:image_picker/image_picker.dart';
 
+import '../domain/my_plant.dart';
+
 class MyPlantsScreen extends StatefulWidget {
   const MyPlantsScreen({super.key});
 
@@ -28,6 +30,7 @@ class _MyPlantsScreenState extends State<MyPlantsScreen> {
   final ImagePicker _picker = ImagePicker();
   XFile? _file;
   Uint8List? _imageBytes;
+  final List<MyPlant> _myPlants = [];
 
   String? _requiredText(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -55,14 +58,33 @@ class _MyPlantsScreenState extends State<MyPlantsScreen> {
   }
 
   void _submit() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+  if (!_formKey.currentState!.validate()) {
+    return;
+  }
+
+    final plantName = _nameController.text.trim();
+
+    final plant = MyPlant(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      name: plantName,
+      room: _roomController.text.trim(),
+      notes: _notesController.text.trim(),
+    );
+
+    setState(() {
+      _myPlants.add(plant);
+
+      _nameController.clear();
+      _roomController.clear();
+      _notesController.clear();
+      _file = null;
+      _imageBytes = null;
+    });
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Planta registrada: ${_nameController.text}',
+          'Planta registrada: $plantName',
         ),
       ),
     );
@@ -151,6 +173,33 @@ class _MyPlantsScreenState extends State<MyPlantsScreen> {
               onPressed: _submit,
               child: const Text('Guardar planta'),
             ),
+
+            const SizedBox(height: 32),
+
+            Text(
+              'Plantes registrades',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+
+            const SizedBox(height: 12),
+
+            if (_myPlants.isEmpty)
+              const Text('Encara no has registrat cap planta.')
+            else
+              ..._myPlants.map(
+                (plant) {
+                  return Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.local_florist),
+                      title: Text(plant.name),
+                      subtitle: Text(
+                        '${plant.room}\n${plant.notes}',
+                      ),
+                      isThreeLine: plant.notes.isNotEmpty,
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
