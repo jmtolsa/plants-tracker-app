@@ -6,7 +6,14 @@ import 'package:image_picker/image_picker.dart';
 import '../domain/my_plant.dart';
 
 class MyPlantsScreen extends StatefulWidget {
-  const MyPlantsScreen({super.key});
+  const MyPlantsScreen({
+    super.key,
+    required this.plants,
+    required this.onPlantAdded,
+  });
+
+  final List<MyPlant> plants;
+  final void Function(MyPlant plant) onPlantAdded;
 
   @override
   State<MyPlantsScreen> createState() => _MyPlantsScreenState();
@@ -30,7 +37,7 @@ class _MyPlantsScreenState extends State<MyPlantsScreen> {
   final ImagePicker _picker = ImagePicker();
   XFile? _file;
   Uint8List? _imageBytes;
-  final List<MyPlant> _myPlants = [];
+ 
 
   String? _requiredText(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -69,10 +76,10 @@ class _MyPlantsScreenState extends State<MyPlantsScreen> {
       name: plantName,
       room: _roomController.text.trim(),
       notes: _notesController.text.trim(),
+      imageBytes: _imageBytes,
     );
-
     setState(() {
-      _myPlants.add(plant);
+      widget.onPlantAdded(plant);
 
       _nameController.clear();
       _roomController.clear();
@@ -183,19 +190,24 @@ class _MyPlantsScreenState extends State<MyPlantsScreen> {
 
             const SizedBox(height: 12),
 
-            if (_myPlants.isEmpty)
+            if (widget.plants.isEmpty)
               const Text('Encara no has registrat cap planta.')
             else
-              ..._myPlants.map(
+              ...widget.plants.map(
                 (plant) {
                   return Card(
                     child: ListTile(
-                      leading: const Icon(Icons.local_florist),
-                      title: Text(plant.name),
-                      subtitle: Text(
-                        '${plant.room}\n${plant.notes}',
+                      leading: plant.imageBytes == null
+                    ? const Icon(Icons.local_florist)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.memory(
+                          plant.imageBytes!,
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      isThreeLine: plant.notes.isNotEmpty,
                     ),
                   );
                 },

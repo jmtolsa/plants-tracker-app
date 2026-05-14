@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MyPlant {
 
- String get id; String get name; String get room; String get notes;
+ String get id; String get name; String get room; String get notes;@JsonKey(includeFromJson: false, includeToJson: false) Uint8List? get imageBytes;
 /// Create a copy of MyPlant
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MyPlantCopyWith<MyPlant> get copyWith => _$MyPlantCopyWithImpl<MyPlant>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyPlant&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.room, room) || other.room == room)&&(identical(other.notes, notes) || other.notes == notes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyPlant&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.room, room) || other.room == room)&&(identical(other.notes, notes) || other.notes == notes)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,room,notes);
+int get hashCode => Object.hash(runtimeType,id,name,room,notes,const DeepCollectionEquality().hash(imageBytes));
 
 @override
 String toString() {
-  return 'MyPlant(id: $id, name: $name, room: $room, notes: $notes)';
+  return 'MyPlant(id: $id, name: $name, room: $room, notes: $notes, imageBytes: $imageBytes)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $MyPlantCopyWith<$Res>  {
   factory $MyPlantCopyWith(MyPlant value, $Res Function(MyPlant) _then) = _$MyPlantCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String room, String notes
+ String id, String name, String room, String notes,@JsonKey(includeFromJson: false, includeToJson: false) Uint8List? imageBytes
 });
 
 
@@ -65,13 +65,14 @@ class _$MyPlantCopyWithImpl<$Res>
 
 /// Create a copy of MyPlant
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? room = null,Object? notes = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? room = null,Object? notes = null,Object? imageBytes = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,room: null == room ? _self.room : room // ignore: cast_nullable_to_non_nullable
 as String,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
-as String,
+as String,imageBytes: freezed == imageBytes ? _self.imageBytes : imageBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String room,  String notes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String room,  String notes, @JsonKey(includeFromJson: false, includeToJson: false)  Uint8List? imageBytes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MyPlant() when $default != null:
-return $default(_that.id,_that.name,_that.room,_that.notes);case _:
+return $default(_that.id,_that.name,_that.room,_that.notes,_that.imageBytes);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.name,_that.room,_that.notes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String room,  String notes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String room,  String notes, @JsonKey(includeFromJson: false, includeToJson: false)  Uint8List? imageBytes)  $default,) {final _that = this;
 switch (_that) {
 case _MyPlant():
-return $default(_that.id,_that.name,_that.room,_that.notes);case _:
+return $default(_that.id,_that.name,_that.room,_that.notes,_that.imageBytes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.name,_that.room,_that.notes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String room,  String notes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String room,  String notes, @JsonKey(includeFromJson: false, includeToJson: false)  Uint8List? imageBytes)?  $default,) {final _that = this;
 switch (_that) {
 case _MyPlant() when $default != null:
-return $default(_that.id,_that.name,_that.room,_that.notes);case _:
+return $default(_that.id,_that.name,_that.room,_that.notes,_that.imageBytes);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.id,_that.name,_that.room,_that.notes);case _:
 @JsonSerializable()
 
 class _MyPlant implements MyPlant {
-  const _MyPlant({required this.id, required this.name, required this.room, required this.notes});
+  const _MyPlant({required this.id, required this.name, required this.room, required this.notes, @JsonKey(includeFromJson: false, includeToJson: false) this.imageBytes});
   factory _MyPlant.fromJson(Map<String, dynamic> json) => _$MyPlantFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String room;
 @override final  String notes;
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  Uint8List? imageBytes;
 
 /// Create a copy of MyPlant
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyPlant&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.room, room) || other.room == room)&&(identical(other.notes, notes) || other.notes == notes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyPlant&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.room, room) || other.room == room)&&(identical(other.notes, notes) || other.notes == notes)&&const DeepCollectionEquality().equals(other.imageBytes, imageBytes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,room,notes);
+int get hashCode => Object.hash(runtimeType,id,name,room,notes,const DeepCollectionEquality().hash(imageBytes));
 
 @override
 String toString() {
-  return 'MyPlant(id: $id, name: $name, room: $room, notes: $notes)';
+  return 'MyPlant(id: $id, name: $name, room: $room, notes: $notes, imageBytes: $imageBytes)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$MyPlantCopyWith<$Res> implements $MyPlantCopyWith<$Res> {
   factory _$MyPlantCopyWith(_MyPlant value, $Res Function(_MyPlant) _then) = __$MyPlantCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String room, String notes
+ String id, String name, String room, String notes,@JsonKey(includeFromJson: false, includeToJson: false) Uint8List? imageBytes
 });
 
 
@@ -270,13 +272,14 @@ class __$MyPlantCopyWithImpl<$Res>
 
 /// Create a copy of MyPlant
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? room = null,Object? notes = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? room = null,Object? notes = null,Object? imageBytes = freezed,}) {
   return _then(_MyPlant(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,room: null == room ? _self.room : room // ignore: cast_nullable_to_non_nullable
 as String,notes: null == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
-as String,
+as String,imageBytes: freezed == imageBytes ? _self.imageBytes : imageBytes // ignore: cast_nullable_to_non_nullable
+as Uint8List?,
   ));
 }
 

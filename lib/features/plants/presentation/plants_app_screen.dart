@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../my_plants/presentation/my_plants_screen.dart';
 import 'plants_screen.dart';
+import '../../my_plants/domain/my_plant.dart';
+import '../../my_plants/presentation/my_plants_list_screen.dart';
 
 class PlantsAppScreen extends StatefulWidget {
   const PlantsAppScreen({super.key});
@@ -12,12 +14,24 @@ class PlantsAppScreen extends StatefulWidget {
 
 class _PlantsAppScreenState extends State<PlantsAppScreen> {
   int _selectedIndex = 0;
+  final List<MyPlant> _myPlants = [];
 
-  final List<Widget> _screens = const [
-    PlantsScreen(),
-    MyPlantsScreen(),
-    MyPlantsScreen(),
-  ];
+  List<Widget> get _screens {
+    return [
+      const PlantsScreen(),
+      MyPlantsScreen(
+        plants: _myPlants,
+        onPlantAdded: (plant) {
+          setState(() {
+            _myPlants.add(plant);
+          });
+        },
+      ),
+      MyPlantsListScreen(
+        plants: _myPlants,
+      ),
+    ];
+  }
 
   final List<String> _titles = const [
     'Catàleg',
