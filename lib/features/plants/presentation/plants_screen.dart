@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../data/plants_repository.dart';
 import '../domain/plant.dart';
+import 'plant_detail_screen.dart';
+
 
 class PlantsScreen extends StatefulWidget {
   const PlantsScreen({super.key});
@@ -89,7 +91,7 @@ final ScrollController _scrollController = ScrollController();
     _scrollController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     if (_loading) {
@@ -146,7 +148,17 @@ final ScrollController _scrollController = ScrollController();
                     fit: BoxFit.cover,
                   ),
             title: Text(plant.commonName),
-            subtitle: Text('Watering: ${plant.watering}'),
+            subtitle: Text('Familia: ${plant.genus}'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PlantDetailScreen(
+                    plant: plant,
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

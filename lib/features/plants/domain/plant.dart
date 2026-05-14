@@ -12,7 +12,7 @@ abstract class Plant with _$Plant {
     required String commonName,
 
     @JsonKey(fromJson: _stringFromJson)
-    required String watering,
+    required String genus,
 
     @JsonKey(
       name: 'default_image',

@@ -9,13 +9,13 @@ part of 'plant.dart';
 _Plant _$PlantFromJson(Map<String, dynamic> json) => _Plant(
   id: (json['id'] as num).toInt(),
   commonName: _stringFromJson(json['common_name']),
-  watering: _stringFromJson(json['watering']),
+  genus: _stringFromJson(json['genus']),
   imageUrl: _imageFromJson(json['default_image'] as Map<String, dynamic>?),
 );
 
 Map<String, dynamic> _$PlantToJson(_Plant instance) => <String, dynamic>{
   'id': instance.id,
   'common_name': instance.commonName,
-  'watering': instance.watering,
+  'genus': instance.genus,
   'default_image': instance.imageUrl,
 };

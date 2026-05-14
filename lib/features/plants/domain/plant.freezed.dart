@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Plant {
 
- int get id;@JsonKey(name: 'common_name', fromJson: _stringFromJson) String get commonName;@JsonKey(fromJson: _stringFromJson) String get watering;@JsonKey(name: 'default_image', fromJson: _imageFromJson) String get imageUrl;
+ int get id;@JsonKey(name: 'common_name', fromJson: _stringFromJson) String get commonName;@JsonKey(fromJson: _stringFromJson) String get genus;@JsonKey(name: 'default_image', fromJson: _imageFromJson) String get imageUrl;
 /// Create a copy of Plant
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PlantCopyWith<Plant> get copyWith => _$PlantCopyWithImpl<Plant>(this as Plant, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Plant&&(identical(other.id, id) || other.id == id)&&(identical(other.commonName, commonName) || other.commonName == commonName)&&(identical(other.watering, watering) || other.watering == watering)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Plant&&(identical(other.id, id) || other.id == id)&&(identical(other.commonName, commonName) || other.commonName == commonName)&&(identical(other.genus, genus) || other.genus == genus)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,commonName,watering,imageUrl);
+int get hashCode => Object.hash(runtimeType,id,commonName,genus,imageUrl);
 
 @override
 String toString() {
-  return 'Plant(id: $id, commonName: $commonName, watering: $watering, imageUrl: $imageUrl)';
+  return 'Plant(id: $id, commonName: $commonName, genus: $genus, imageUrl: $imageUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PlantCopyWith<$Res>  {
   factory $PlantCopyWith(Plant value, $Res Function(Plant) _then) = _$PlantCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'common_name', fromJson: _stringFromJson) String commonName,@JsonKey(fromJson: _stringFromJson) String watering,@JsonKey(name: 'default_image', fromJson: _imageFromJson) String imageUrl
+ int id,@JsonKey(name: 'common_name', fromJson: _stringFromJson) String commonName,@JsonKey(fromJson: _stringFromJson) String genus,@JsonKey(name: 'default_image', fromJson: _imageFromJson) String imageUrl
 });
 
 
@@ -65,11 +65,11 @@ class _$PlantCopyWithImpl<$Res>
 
 /// Create a copy of Plant
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? commonName = null,Object? watering = null,Object? imageUrl = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? commonName = null,Object? genus = null,Object? imageUrl = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,commonName: null == commonName ? _self.commonName : commonName // ignore: cast_nullable_to_non_nullable
-as String,watering: null == watering ? _self.watering : watering // ignore: cast_nullable_to_non_nullable
+as String,genus: null == genus ? _self.genus : genus // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -156,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'common_name', fromJson: _stringFromJson)  String commonName, @JsonKey(fromJson: _stringFromJson)  String watering, @JsonKey(name: 'default_image', fromJson: _imageFromJson)  String imageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'common_name', fromJson: _stringFromJson)  String commonName, @JsonKey(fromJson: _stringFromJson)  String genus, @JsonKey(name: 'default_image', fromJson: _imageFromJson)  String imageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Plant() when $default != null:
-return $default(_that.id,_that.commonName,_that.watering,_that.imageUrl);case _:
+return $default(_that.id,_that.commonName,_that.genus,_that.imageUrl);case _:
   return orElse();
 
 }
@@ -177,10 +177,10 @@ return $default(_that.id,_that.commonName,_that.watering,_that.imageUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'common_name', fromJson: _stringFromJson)  String commonName, @JsonKey(fromJson: _stringFromJson)  String watering, @JsonKey(name: 'default_image', fromJson: _imageFromJson)  String imageUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'common_name', fromJson: _stringFromJson)  String commonName, @JsonKey(fromJson: _stringFromJson)  String genus, @JsonKey(name: 'default_image', fromJson: _imageFromJson)  String imageUrl)  $default,) {final _that = this;
 switch (_that) {
 case _Plant():
-return $default(_that.id,_that.commonName,_that.watering,_that.imageUrl);case _:
+return $default(_that.id,_that.commonName,_that.genus,_that.imageUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +197,10 @@ return $default(_that.id,_that.commonName,_that.watering,_that.imageUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'common_name', fromJson: _stringFromJson)  String commonName, @JsonKey(fromJson: _stringFromJson)  String watering, @JsonKey(name: 'default_image', fromJson: _imageFromJson)  String imageUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'common_name', fromJson: _stringFromJson)  String commonName, @JsonKey(fromJson: _stringFromJson)  String genus, @JsonKey(name: 'default_image', fromJson: _imageFromJson)  String imageUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _Plant() when $default != null:
-return $default(_that.id,_that.commonName,_that.watering,_that.imageUrl);case _:
+return $default(_that.id,_that.commonName,_that.genus,_that.imageUrl);case _:
   return null;
 
 }
@@ -212,12 +212,12 @@ return $default(_that.id,_that.commonName,_that.watering,_that.imageUrl);case _:
 @JsonSerializable()
 
 class _Plant implements Plant {
-  const _Plant({required this.id, @JsonKey(name: 'common_name', fromJson: _stringFromJson) required this.commonName, @JsonKey(fromJson: _stringFromJson) required this.watering, @JsonKey(name: 'default_image', fromJson: _imageFromJson) required this.imageUrl});
+  const _Plant({required this.id, @JsonKey(name: 'common_name', fromJson: _stringFromJson) required this.commonName, @JsonKey(fromJson: _stringFromJson) required this.genus, @JsonKey(name: 'default_image', fromJson: _imageFromJson) required this.imageUrl});
   factory _Plant.fromJson(Map<String, dynamic> json) => _$PlantFromJson(json);
 
 @override final  int id;
 @override@JsonKey(name: 'common_name', fromJson: _stringFromJson) final  String commonName;
-@override@JsonKey(fromJson: _stringFromJson) final  String watering;
+@override@JsonKey(fromJson: _stringFromJson) final  String genus;
 @override@JsonKey(name: 'default_image', fromJson: _imageFromJson) final  String imageUrl;
 
 /// Create a copy of Plant
@@ -233,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Plant&&(identical(other.id, id) || other.id == id)&&(identical(other.commonName, commonName) || other.commonName == commonName)&&(identical(other.watering, watering) || other.watering == watering)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Plant&&(identical(other.id, id) || other.id == id)&&(identical(other.commonName, commonName) || other.commonName == commonName)&&(identical(other.genus, genus) || other.genus == genus)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,commonName,watering,imageUrl);
+int get hashCode => Object.hash(runtimeType,id,commonName,genus,imageUrl);
 
 @override
 String toString() {
-  return 'Plant(id: $id, commonName: $commonName, watering: $watering, imageUrl: $imageUrl)';
+  return 'Plant(id: $id, commonName: $commonName, genus: $genus, imageUrl: $imageUrl)';
 }
 
 
@@ -253,7 +253,7 @@ abstract mixin class _$PlantCopyWith<$Res> implements $PlantCopyWith<$Res> {
   factory _$PlantCopyWith(_Plant value, $Res Function(_Plant) _then) = __$PlantCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'common_name', fromJson: _stringFromJson) String commonName,@JsonKey(fromJson: _stringFromJson) String watering,@JsonKey(name: 'default_image', fromJson: _imageFromJson) String imageUrl
+ int id,@JsonKey(name: 'common_name', fromJson: _stringFromJson) String commonName,@JsonKey(fromJson: _stringFromJson) String genus,@JsonKey(name: 'default_image', fromJson: _imageFromJson) String imageUrl
 });
 
 
@@ -270,11 +270,11 @@ class __$PlantCopyWithImpl<$Res>
 
 /// Create a copy of Plant
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? commonName = null,Object? watering = null,Object? imageUrl = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? commonName = null,Object? genus = null,Object? imageUrl = null,}) {
   return _then(_Plant(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,commonName: null == commonName ? _self.commonName : commonName // ignore: cast_nullable_to_non_nullable
-as String,watering: null == watering ? _self.watering : watering // ignore: cast_nullable_to_non_nullable
+as String,genus: null == genus ? _self.genus : genus // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
