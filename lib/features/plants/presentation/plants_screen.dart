@@ -13,22 +13,39 @@ class PlantsScreen extends StatefulWidget {
 class _PlantsScreenState extends State<PlantsScreen> {
   final _repository = PlantsRepository();
 
-  List<Plant> _plants = [];
+ final List<Plant> _plants = [];
+
+final ScrollController _scrollController = ScrollController();
+
   bool _loading = true;
+  bool _loadingMore = false;
+
   String? _error;
+
+  int _page = 1;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController.addListener(_onScroll);
+
     _loadPlants();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _loadMorePlants();
+    }
   }
 
   Future<void> _loadPlants() async {
     try {
-      final plants = await _repository.fetchPlants();
+      final plants = await _repository.fetchPlants(page: _page);
 
       setState(() {
-        _plants = plants;
+        _plants.addAll(plants);
         _loading = false;
       });
     } catch (error) {
@@ -39,6 +56,40 @@ class _PlantsScreenState extends State<PlantsScreen> {
     }
   }
 
+  Future<void> _loadMorePlants() async {
+    if (_loadingMore) {
+      return;
+    }
+
+    setState(() {
+      _loadingMore = true;
+    });
+
+    try {
+      _page++;
+
+      final plants = await _repository.fetchPlants(
+        page: _page,
+      );
+
+      setState(() {
+        _plants.addAll(plants);
+      });
+    } catch (_) {
+      // ignorem errors de paginació de moment
+    } finally {
+      setState(() {
+        _loadingMore = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     if (_loading) {
@@ -68,8 +119,21 @@ class _PlantsScreenState extends State<PlantsScreen> {
         title: const Text('My Plants'),
       ),
       body: ListView.builder(
-        itemCount: _plants.length,
+        controller: _scrollController,
+        itemCount: _plants.length + 1,
         itemBuilder: (context, index) {
+          if (index == _plants.length) {
+            if (_loadingMore) {
+              return const Padding(
+                padding: EdgeInsets.all(16),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+
+            return const SizedBox(height: 80);
+          }
           final plant = _plants[index];
 
           return ListTile(
